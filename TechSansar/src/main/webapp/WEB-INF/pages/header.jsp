@@ -27,9 +27,9 @@ href="${pageContext.request.contextPath}/css/header.css" />
         <p>Your Perfect Laptop, Just a Click Away</p>
       </div>
       <div class="top-nav-right">
-        <a href="#">Putalisadak, Kathmandu</a>
-        <a href="#">| Contact us |</a>
-        <a href="">| About Us |</a>
+        <a>Putalisadak, Kathmandu</a>
+        <a href="${contextPath}/contactus">| Contact us |</a>
+        <a href="${contextPath}/aboutus">| About Us |</a>
       </div>
     </div>
 
@@ -45,30 +45,28 @@ href="${pageContext.request.contextPath}/css/header.css" />
         <div class="dropdown">
           <a>Laptop</a>
           <div class="dropdown-content">
-            <a href="${contextPath}/AsusL">Asus</a>
-            <a href="${contextPath }/AcerL">Acer</a>
-            <a href="#">Alienware</a>
-            <a href="#">Apple</a>
-            <a href="#">Dell</a>
+            <a href="${contextPath}/product?page=AsusL">Asus</a>
+            <a href="${contextPath}/product?page=AcerL">Acer</a>
+            <a href="${contextPath}/product?page=AlienwareL">Alienware</a>
+            <a href="${contextPath}/product?page=AppleL">Apple</a>
           </div>
         </div>
         <div class="dropdown">
           <a>Desktops</a>
           <div class="dropdown-content">
-            <a href="#">Asus</a>
-            <a href="#">Acer</a>
-            <a href="#">Alienware</a>
-            <a href="#">Apple</a>
-            <a href="#">Dell</a>
+            <a href="${contextPath}/product?page=AcerD">Acer</a>
+            <a href="${contextPath}/product?page=AlienwareD">Alienware</a>
+            <a href="${contextPath}/product?page=AppleD">Apple</a>
+            <a href="${contextPath}/product?page=DellD">Dell</a>
           </div>
         </div>
 
         <div class="dropdown">
           <a>Accessories</a>
           <div class="dropdown-content">
-            <a href="#">Charger</a>
-            <a href="#">Airpods</a>
-            <a href="#">Watch</a>
+            <a href="${contextPath}/product?page=charger">Charger</a>
+            <a href="${contextPath}/product?page=airpods">Airpods</a>
+            <a href="${contextPath}/product?page=watch">Watch</a>
           </div>
         </div>
 
@@ -76,20 +74,20 @@ href="${pageContext.request.contextPath}/css/header.css" />
         <div class="dropdown">
           <a>Mobile Phones</a>
           <div class="dropdown-content">
-            <a href="#">Apple</a>
-            <a href="#">Samsung</a>
-            <a href="#">OnePlues</a>
-            <a href="#">Xiaomi</a>
-            <a href="#">Vivo</a>
+            <a href="${contextPath}/product?page=AppleP">Apple</a>
+            <a href="${contextPath}/product?page=SamsungP">Samsung</a>
+            <a href="${contextPath}/product?page=OnePlusP">OnePlus</a>
+            <a href="${contextPath}/product?page=XiaomiP">Xiaomi</a>
+            <a href="${contextPath}/product?page=VivoP">Vivo</a>
           </div>
         </div>
 
         <div class="dropdown">
           <a>Printers</a>
           <div class="dropdown-content">
-            <a href="#">Epson</a>
-            <a href="#">HP</a>
-            <a href="#">Canon</a>
+            <a href="${contextPath}/product?page=Epson">Epson</a>
+            <a href="${contextPath}/product?page=hp">HP</a>
+            <a href="${contextPath}/product?page=canon">Canon</a>
           </div>
         </div>
 
@@ -104,7 +102,7 @@ href="${pageContext.request.contextPath}/css/header.css" />
 
       <div class="Icons">
         <div class="dropdown">
-          <a href="profile.html"><img src="${contextPath}/resources/images/system/myacc.png" alt="My ACcount icon"></a>
+         <img src="${contextPath}/resources/images/system/myacc.png" alt="My ACcount icon"></a>
           <div class="dropdown-content">
           	<c:if test="${not empty sessionScope.username}">
     			<span class="welcome-text">Welcome, ${sessionScope.username}!</span>
@@ -126,7 +124,7 @@ href="${pageContext.request.contextPath}/css/header.css" />
           </div>
         </div>
         <div class="cart-icon">
-          <img src="${contextPath}/resources/images/system/mycart.png">
+          <a href="${contextPath}/mycart"><img src="${contextPath}/resources/images/system/mycart.png"></a>
         </div>
       </div>
     </nav>

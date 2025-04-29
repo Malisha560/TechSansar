@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Acer Laptop</title>
 <link rel="stylesheet" type="text/css" 
 href="${pageContext.request.contextPath}/css/products.css" />
 <link rel="stylesheet" type="text/css" 
@@ -21,7 +21,7 @@ href="${pageContext.request.contextPath}/css/footer.css"/>
 <div class="products">
 
     <div class="product-card">
-      <img src="acer/acer-aspire-15-a15-51m-with-fingerprint-with-backlit-on-wp-start-screen-steel-gray-01-1.avif" alt="Product">
+      <img src="${contextPath}/resources/images/system/acer-aspire-15-a15-51m-with-fingerprint-with-backlit-on-wp-start-screen-steel-gray-01-1.avif" alt="Product">
       <div class="product-title">Acer Aspire 3 A315-44P-R263 Ryzen 7</div>
       <div>
         <span class="price">Rs. 63,990</span>
@@ -32,7 +32,7 @@ href="${pageContext.request.contextPath}/css/footer.css"/>
     </div>
 
     <div class="product-card">
-      <img src="acer/acer-nitro-v-17-ai-anv17-61-non-fingerprint-with-backlit-on-wp-black-01-1.avif" alt="Product">
+      <img src="${contextPath}/resources/images/system/acer-nitro-v-17-ai-anv17-61-non-fingerprint-with-backlit-on-wp-black-01-1.avif" alt="Product">
       <div class="product-title">Acer Aspire 3 A315-44P-R263 Ryzen 7</div>
       <div>
         <span class="price">Rs. 63,990</span>
@@ -42,7 +42,7 @@ href="${pageContext.request.contextPath}/css/footer.css"/>
       <button class="add-to-cart">ADD TO CART</button>
     </div>
     <div class="product-card">
-      <img src="acer/acer-travelmate-p4-tmp416-53-53tco-with-fingerprint-with-backlit-on-with-smart-card-wp-strat-screen-slate-blue-01-2.avif" alt="Product">
+      <img src="${contextPath}/resources/images/system/acer-travelmate-p4-tmp416-53-53tco-with-fingerprint-with-backlit-on-with-smart-card-wp-strat-screen-slate-blue-01-2.avif" alt="Product">
       <div class="product-title">Acer Aspire 3 A315-44P-R263 Ryzen 7</div>
       <div>
         <span class="price">Rs. 63,990</span>
@@ -53,7 +53,7 @@ href="${pageContext.request.contextPath}/css/footer.css"/>
     </div>
 
     <div class="product-card">
-      <img src="acer/Nitro-V-14-AI_ANV14-62-01.avif" alt="Product">
+      <img src="${contextPath}/resources/images/system/Nitro-V-14-AI_ANV14-62-01.avif" alt="Product">
       <div class="product-title">Acer Aspire 5 A515-58P-58UR i5 13th Gen</div>
       <div>
         <span class="price">Rs. 70,990</span>
@@ -64,7 +64,7 @@ href="${pageContext.request.contextPath}/css/footer.css"/>
     </div>
 
     <div class="product-card">
-      <img src="acer/predator_helios_16_ai_ph16-73-01.avif" alt="Product">
+      <img src="${contextPath}/resources/images/system/predator_helios_16_ai_ph16-73-01.avif" alt="Product">
       <div class="product-title">Acer Aspire Lite AL14-31P-39UP i3 13th Gen</div>
       <div>
         <span class="price">Rs. 49,990</span>
@@ -74,7 +74,7 @@ href="${pageContext.request.contextPath}/css/footer.css"/>
       <button class="add-to-cart">ADD TO CART</button>
     </div>
     <div class="product-card">
-        <img src="acer/Swift Go 14 AI AMD-1.avif" alt="Product">
+        <img src="${contextPath}/resources/images/system/Swift Go 14 AI AMD-1.avif" alt="Product">
         <div class="product-title">Acer Aspire Lite AL14-31P-39UP i3 13th Gen</div>
         <div>
           <span class="price">Rs. 49,990</span>

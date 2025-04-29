@@ -19,7 +19,7 @@ href="${pageContext.request.contextPath}/css/footer.css"/>
 <body>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <jsp:include page="header.jsp"></jsp:include>
-<section>
+<section class="imgslider">
     <article id="article-container">
       <img src="${contextPath}/resources/images/system/slide1.png" class="imageslider" id="img0">
       <img src="${contextPath}/resources/images/system/slide2.jpg" class="imageslider" id="img1">

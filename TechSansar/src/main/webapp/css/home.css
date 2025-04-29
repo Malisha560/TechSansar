@@ -1,9 +1,10 @@
 @charset "UTF-8";
 
     /* Image Slider section */
-    section {
+    .imgslider {
       position: relative;
       width: 100%;
+      overflow: hidden;
     }
 
     #article-container {

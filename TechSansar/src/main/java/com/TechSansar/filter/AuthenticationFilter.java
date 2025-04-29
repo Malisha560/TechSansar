@@ -31,8 +31,6 @@ public class AuthenticationFilter implements Filter {
 	private static final String CONTACT = "/contact";
 	private static final String PRODUCT = "/product";
 	private static final String CART_LIST = "/cartlist";
-	private static final String ASUSL = "/AsusL";
-	private static final String ACERL = "/AcerL";
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// Initialization logic, if required
@@ -48,7 +46,8 @@ public class AuthenticationFilter implements Filter {
 		String uri = req.getRequestURI();
 		
 		// Allow access to resources
-		if (uri.endsWith(".png") || uri.endsWith(".jpg") || uri.endsWith(".css")) {
+		if (uri.endsWith(".png") || uri.endsWith(".jpg") || uri.endsWith(".css")
+				|| uri.endsWith(".webp")|| uri.endsWith(".avif")) {
 			chain.doFilter(request, response);
 			return;
 		}
@@ -74,8 +73,7 @@ public class AuthenticationFilter implements Filter {
 			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
 				res.sendRedirect(req.getContextPath() + HOME);
 			} else if (uri.endsWith(HOME) || uri.endsWith(ROOT) || uri.endsWith(ABOUT) || uri.endsWith(PORTFOLIO)
-					|| uri.endsWith(CONTACT) || uri.endsWith(PRODUCT) || uri.endsWith(CART_LIST)
-					|| uri.endsWith(ASUSL)|| uri.endsWith(ACERL)) {
+					|| uri.endsWith(CONTACT) || uri.endsWith(PRODUCT) || uri.endsWith(CART_LIST)) {
 				chain.doFilter(request, response);
 			} else if (uri.endsWith(DASHBOARD) || uri.endsWith(MODIFY_STUDENTS) || uri.endsWith(STUDENT_UPDATE)
 					|| uri.endsWith(ADMIN_ORDER)) {
@@ -85,7 +83,7 @@ public class AuthenticationFilter implements Filter {
 			}
 		} else {
 			// Not logged in
-			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.endsWith(HOME) || uri.endsWith(ROOT)) {
+			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.endsWith(HOME) || uri.endsWith(ROOT)|| uri.endsWith(PRODUCT)) {
 				chain.doFilter(request, response);
 			} else {
 				res.sendRedirect(req.getContextPath() + LOGIN);
