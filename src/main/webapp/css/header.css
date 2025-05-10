@@ -1,0 +1,151 @@
+@charset "UTF-8";
+ * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #fff;
+
+    }
+
+    /*top nav CSS */
+    .top-nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #D11D27;
+      color: #fff;
+      width: 100%;
+      padding: 5px 40px;
+      font-size: 14px;
+    }
+
+    /* top nav left style */
+    .top-nav-left p {
+      margin: 0;
+      font-size: medium;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    /* top nav right style */
+    .top-nav-right a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+    }
+
+    /* logo part */
+    .logo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* logo size*/
+    .logo-container img {
+      height: 20px;
+    }
+
+    /* main nav style */
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #e7e6e6;
+      border-radius: 65px;
+      gap: 75px;
+      padding: 10px 30px;
+
+    }
+
+    .dropbtn.dropdown:hover {
+      box-shadow: 4px 4px 4px #801111;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 1;
+      min-width: 140px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: 0.2s ease;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f2f2f2;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* text deco of nav */
+    .nav-links a {
+      text-decoration: none;
+      color: rgb(0, 0, 0);
+      font-weight: bold;
+    }
+
+    /* search bar alignment*/
+    .search-container {
+      display: flex;
+      align-items: center;
+    }
+
+    /* seach icon style */
+    .search-icon {
+      font-size: 20px;
+      padding: 5px;
+    }
+
+    /* search transition */
+    #searchInput {
+      width: 0;
+      padding: 5px;
+      margin-left: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      transition: width 0.4s ease;
+      opacity: 0;
+    }
+
+    /* search input displayer */
+    #searchInput.show {
+      width: 200px;
+      opacity: 1;
+    }
+
+    /* my cart account alignment */
+    .Icons {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* my cart account Size */
+    .Icons img {
+      height: 35px;
+      cursor: pointer;
+    }
