@@ -52,6 +52,27 @@ public class LoginService {
 
         return false;
     }
+    
+    public String getRoleByUsername(String username) {
+        if (isConnectionError) {
+            return null;
+        }
+
+        String query = "SELECT r.name FROM users u " +
+                       "JOIN role r ON u.role_id = r.role_id " +
+                       "WHERE u.username = ?";
+        try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet result = stmt.executeQuery();
+            if (result.next()) {
+                return result.getString("name"); // returns "Admin" or "User"
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /**
      * Validates the password retrieved from the database.

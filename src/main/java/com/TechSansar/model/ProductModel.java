@@ -5,15 +5,22 @@ public class ProductModel {
     private String imageUrl;
     private int product_price;
     private String product_description;// Added description field
+    private int stock;
 
     // Constructor with description field
-    public ProductModel(String product_name, String imageUrl, int product_price, String product_description) {
+    public ProductModel(String product_name, String imageUrl, int product_price, String product_description, int stock) {
         this.product_name = product_name;
         this.imageUrl = imageUrl;
         this.product_price = product_price;
         this.product_description = product_description;  // Initialize the description
+        this.stock = stock;
     }
 
+    public ProductModel(int product_id, String product_name, int stock) {
+        this.product_name = product_name;
+        this.stock = stock;
+    }
+    
     public ProductModel() {
 		super();
 	}
@@ -51,5 +58,12 @@ public class ProductModel {
 
     public void setDescription(String description) {
         this.product_description = description;
+    }
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+    	  this.stock = stock;
     }
 }

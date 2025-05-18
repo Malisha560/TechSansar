@@ -42,8 +42,13 @@
             <span class="price">Rs. ${productItem.price}</span>
           </div>
           <!-- Add to Cart -->
-          <button class="add-to-cart">ADD TO CART</button>
-        </div>
+					<form action="<%=request.getContextPath()%>/cart" method="post">
+						<input type="hidden" name="name" value="${productItem.name}" /> <input
+							type="hidden" name="price" value="${productItem.price}" /> <input
+							type="hidden" name="image" value="${productItem.imageUrl}" />
+						<button type="submit">Add to Cart</button>
+					</form>
+				</div>
       </c:forEach>
     </c:if>
   </div>

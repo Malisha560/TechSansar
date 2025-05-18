@@ -3,66 +3,75 @@
 <%@ page import="java.util.*, java.sql.*" %>
 <%@ page session="true" %>
 <%
-String role = (String) session.getAttribute("role");
-if (role == null || !role.equals("admin")) {
-    response.sendRedirect("login.jsp");
+String role = null;
+jakarta.servlet.http.Cookie[] cookies = request.getCookies();
+if (cookies != null) {
+    for (jakarta.servlet.http.Cookie cookie : cookies) {
+        if (cookie.getName().equals("role")) {
+            role = cookie.getValue();
+        }
+    }
+}
+
+if (!"Admin".equalsIgnoreCase(role)) {
+    response.sendRedirect(request.getContextPath() + "/home");
     return;
 }
 %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>TechSansar</title>
-  <link rel="stylesheet" href="css/dashboard.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" 
+  href="<%= request.getContextPath() %>/css/admin/dashboard.css?v=<%= System.currentTimeMillis() %>">
 </head>
 <body>
-<header><h1>Admin Dashboard</h1></header>
-<div class="container">
-  <h2>Product List</h2>
-  <table>
-    <tr><th>ID</th><th>Name</th><th>Price</th><th>Actions</th></tr>
-    <%
-      Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/techsansar", "root", "");
-      Statement stmt = con.createStatement();
-      ResultSet rs = stmt.executeQuery("SELECT * FROM product");
-      while (rs.next()) {
-    %>
-    <tr>
-      <td><%= rs.getInt("id") %></td>
-      <td><%= rs.getString("name") %></td>
-      <td><%= rs.getInt("price") %></td>
-      <td class="actions">
-        <form style="display:inline;" action="EditProductServlet" method="post">
-          <input type="hidden" name="id" value="<%= rs.getInt("id") %>"/>
-          <button class="edit">Edit</button>
-        </form>
-        <form style="display:inline;" action="DeleteProductServlet" method="post">
-          <input type="hidden" name="id" value="<%= rs.getInt("id") %>"/>
-          <button class="delete">Delete</button>
-        </form>
-      </td>
-    </tr>
-    <% } con.close(); %>
-  </table>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Inventory Management</h2>
+      <a href="#" class="nav-link active">Dashboard</a>
+      <a href="#" class="nav-link">Product Information</a>
+      <a href="#" class="nav-link">User Information</a>
+    </div>
 
-  <h2>Product Stats</h2>
-  <canvas id="chart" width="400" height="200"></canvas>
-</div>
+    <!-- Main Content -->
+    <div class="main">
+      <div class="dashboard-header">
+        <h1>Dashboard</h1>
+        <div class="admin-menu" onclick="toggleDropdown()">Admin ▼
+          <div class="dropdown" id="dropdownMenu">
+            <a href="#">Settings</a>
+            <a href="#">Logout</a>
+          </div>
+        </div>
+      </div>
 
-<script>
-  const ctx = document.getElementById('chart').getContext('2d');
-  const chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Product A', 'Product B', 'Product C'], // can be dynamically set
-      datasets: [{
-        label: 'Sales',
-        data: [12, 19, 3],
-        backgroundColor: ['#4CAF50', '#FFC107', '#F44336']
-      }]
-    }
-  });
-</script>
+      <section class="section-box">
+        <h3>Recently Added to Cart</h3>
+        <div class="orders">
+          <div class="order-item">
+            <div class="order-product">Lorem Ipsum</div>
+            <div class="order-date">Nov 8th, 2023</div>
+            <div class="order-customer">Lorem Ipsum</div>
+            <div class="order-status status-delivered">Delivered</div>
+            <div class="order-amount">₹200.00</div>
+          </div>
+          <div class="order-item">
+            <div class="order-product">Lorem Ipsum</div>
+            <div class="order-date">Nov 7th, 2023</div>
+            <div class="order-customer">Lorem Ipsum</div>
+            <div class="order-status status-canceled">Canceled</div>
+            <div class="order-amount">₹200.00</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  
 </body>
 </html>

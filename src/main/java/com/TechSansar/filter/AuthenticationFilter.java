@@ -22,15 +22,11 @@ public class AuthenticationFilter implements Filter {
 	private static final String REGISTER = "/register";
 	private static final String HOME = "/home";
 	private static final String ROOT = "/";
-	private static final String DASHBOARD = "/dashboard";
-	private static final String MODIFY_STUDENTS = "/modifyStudents";
-	private static final String STUDENT_UPDATE = "/studentUpdate";
-	private static final String ADMIN_ORDER = "/adminOrder";
+	private static final String DASHBOARD = "/admin/dashboard";
 	private static final String ABOUT = "/about";
-	private static final String PORTFOLIO = "/portfolio";
 	private static final String CONTACT = "/contact";
 	private static final String PRODUCT = "/product";
-	private static final String CART_LIST = "/cartlist";
+	private static final String CART = "/cart";
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// Initialization logic, if required
@@ -38,58 +34,92 @@ public class AuthenticationFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	        throws IOException, ServletException {
 
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
+	    HttpServletRequest req = (HttpServletRequest) request;
+	    HttpServletResponse res = (HttpServletResponse) response;
+	    
+	    String uri = req.getRequestURI();
+	    System.out.println("URI: " + uri);
+	    System.out.println("Session username: " + SessionUtil.getAttribute(req, "username"));
+	    System.out.println("Role cookie: " + (CookiesUtil.getCookie(req, "role") != null ? CookiesUtil.getCookie(req, "role").getValue() : "null"));
+	    String contextPath = req.getContextPath();
 
-		String uri = req.getRequestURI();
-		
-		// Allow access to resources
-		if (uri.endsWith(".png") || uri.endsWith(".jpg") || uri.endsWith(".css")
-				|| uri.endsWith(".webp")|| uri.endsWith(".avif")) {
-			chain.doFilter(request, response);
-			return;
-		}
-		
-		boolean isLoggedIn = SessionUtil.getAttribute(req, "username") != null;
-		String userRole = CookiesUtil.getCookie(req, "role") != null ? CookiesUtil.getCookie(req, "role").getValue()
-				: null;
+	    // Allow static resources to pass through
+	    if (uri.endsWith(".png") || uri.endsWith(".jpg") || uri.endsWith(".css")
+	            || uri.endsWith(".webp") || uri.endsWith(".avif") || uri.endsWith(".js")
+	            || uri.endsWith(".woff") || uri.endsWith(".ttf")) {
+	        chain.doFilter(request, response);
+	        return;
+	    }
 
-		if ("admin".equals(userRole)) {
-			// Admin is logged in
-			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
-				res.sendRedirect(req.getContextPath() + DASHBOARD);
-			} else if (uri.endsWith(DASHBOARD) || uri.endsWith(MODIFY_STUDENTS) || uri.endsWith(STUDENT_UPDATE)
-					|| uri.endsWith(ADMIN_ORDER) || uri.endsWith(HOME) || uri.endsWith(ROOT)) {
-				chain.doFilter(request, response);
-			} else if (uri.endsWith(PRODUCT) || uri.endsWith(CART_LIST)) {
-				res.sendRedirect(req.getContextPath() + DASHBOARD);
-			} else {
-				res.sendRedirect(req.getContextPath() + DASHBOARD);
-			}
-		} else if ("user".equals(userRole)) {
-			// User is logged in
-			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
-				res.sendRedirect(req.getContextPath() + HOME);
-			} else if (uri.endsWith(HOME) || uri.endsWith(ROOT) || uri.endsWith(ABOUT) || uri.endsWith(PORTFOLIO)
-					|| uri.endsWith(CONTACT) || uri.endsWith(PRODUCT) || uri.endsWith(CART_LIST)) {
-				chain.doFilter(request, response);
-			} else if (uri.endsWith(DASHBOARD) || uri.endsWith(MODIFY_STUDENTS) || uri.endsWith(STUDENT_UPDATE)
-					|| uri.endsWith(ADMIN_ORDER)) {
-				res.sendRedirect(req.getContextPath() + HOME);
-			} else {
-				res.sendRedirect(req.getContextPath() + HOME);
-			}
-		} else {
-			// Not logged in
-			if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.endsWith(HOME) || uri.endsWith(ROOT)|| uri.endsWith(PRODUCT)) {
-				chain.doFilter(request, response);
-			} else {
-				res.sendRedirect(req.getContextPath() + LOGIN);
-			}
-		}
+	    boolean isLoggedIn = SessionUtil.getAttribute(req, "username") != null;
+	    String userRole = CookiesUtil.getCookie(req, "role") != null ? CookiesUtil.getCookie(req, "role").getValue() : null;
+
+	    if ("admin".equals(userRole)) {
+	        // Admin logged in
+
+	        // Redirect admin away from login or register pages
+	        if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
+	            res.sendRedirect(contextPath + DASHBOARD);
+	            return;
+	        }
+
+	        // Allow access to dashboard and admin pages starting with /admin/
+	        if (uri.equals(contextPath + DASHBOARD) || uri.startsWith(contextPath + "/admin")) {
+	            chain.doFilter(request, response);
+	            return;
+	        }
+
+	        // Redirect admin trying to access other pages to dashboard
+	        res.sendRedirect(contextPath + DASHBOARD);
+	        return;
+
+	    } else if ("user".equals(userRole)) {
+	        // User logged in
+
+	        // Redirect user away from login/register pages
+	        if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER)) {
+	            res.sendRedirect(contextPath + HOME);
+	            return;
+	        }
+
+	        // Allow access to user pages
+	        if (uri.equals(contextPath + HOME) || uri.equals(contextPath + ROOT)
+	                || uri.equals(contextPath + ABOUT) || uri.equals(contextPath + CONTACT)
+	                || uri.equals(contextPath + PRODUCT)|| uri.equals(contextPath + CART)) {
+	            chain.doFilter(request, response);
+	            return;
+	        }
+
+	        // Prevent user from accessing admin dashboard or admin pages
+	        if (uri.equals(contextPath + DASHBOARD) || uri.startsWith(contextPath + "/admin")) {
+	            res.sendRedirect(contextPath + HOME);
+	            return;
+	        }
+
+	        // Redirect to home if other URLs accessed
+	        res.sendRedirect(contextPath + HOME);
+	        return;
+
+	    } else {
+	        // Not logged in
+
+	        // Allow access to login, register, home, root, product, and admin login page
+	        if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(contextPath + HOME)
+	                || uri.equals(contextPath + ROOT) || uri.equals(contextPath + PRODUCT)
+	                || uri.equals(contextPath + DASHBOARD)) {
+	            chain.doFilter(request, response);
+	            return;
+	        }
+
+	        // Redirect others to login page
+	        res.sendRedirect(contextPath + LOGIN);
+	        return;
+	    }
+	    
 	}
+
 
 	@Override
 	public void destroy() {

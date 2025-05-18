@@ -53,28 +53,32 @@ public class LoginController extends HttpServlet {
 	 * @throws IOException      if an I/O error occurs
 	 */
 	@Override
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
+	    String username = req.getParameter("username");
+	    String password = req.getParameter("password");
 
-		UserModel userModel = new UserModel(username, password);
-		Boolean loginStatus = loginService.loginUser(userModel);
-		
-		System.out.println("Login successful. Redirecting to home...");
+	    UserModel userModel = new UserModel(username, password);
+	    Boolean loginStatus = loginService.loginUser(userModel);
 
-		if (loginStatus != null && loginStatus) {
-			SessionUtil.setAttribute(req, "username", username);
-			if (username.equals("admin")) {
-				CookiesUtil.addCookie(resp, "role", "admin", 5 * 30);
-				resp.sendRedirect(req.getContextPath() + "/dashboard"); // Redirect to /home
-			} else {
-				CookiesUtil.addCookie(resp, "role", "user", 5 * 30);
-				resp.sendRedirect(req.getContextPath() + "/home"); // Redirect to /home
-			}
-		} else {
-			handleLoginFailure(req, resp, loginStatus);
-		}
+	    if (loginStatus != null && loginStatus) {
+	        SessionUtil.setAttribute(req, "username", username);
+	        String role = loginService.getRoleByUsername(username);
+	        SessionUtil.setAttribute(req, "role", role);  
+	        CookiesUtil.addCookie(resp, "role", role, 5 * 30);
+	        
+	        System.out.println("User logged in with role: " + role);
+
+	        if ("Admin".equalsIgnoreCase(role)) {
+	            resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
+	        } else {
+	            resp.sendRedirect(req.getContextPath() + "/home");
+	        }
+	    }else {
+	        handleLoginFailure(req, resp, loginStatus);
+	    }
 	}
+
 
 	/**
 	 * Handles login failures by setting attributes and forwarding to the login

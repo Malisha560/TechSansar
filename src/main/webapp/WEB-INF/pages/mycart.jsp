@@ -1,43 +1,70 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="jakarta.servlet.http.HttpSession"%>
-<%@ page import="jakarta.servlet.http.HttpServletRequest"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="com.TechSansar.model.ProductModel" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>My Cart</title>
- <link rel="stylesheet" type="text/css" 
-href="${pageContext.request.contextPath}/css/mycart.css" /> 
-<link rel="stylesheet" type="text/css" 
-href="${pageContext.request.contextPath}/css/header.css" />
-<link rel="stylesheet" type="text/css" 
-href="${pageContext.request.contextPath}/css/footer.css" />
+  <link rel="stylesheet" 
+  href="<%= request.getContextPath() %>/css/mycart.css?v=<%= System.currentTimeMillis() %>">
+  <link rel="stylesheet" 
+href="<%= request.getContextPath() %>/css/header.css?v=<%= System.currentTimeMillis() %>">
+  <link rel="stylesheet" 
+href="<%= request.getContextPath() %>/css/footer.css?v=<%= System.currentTimeMillis() %>">
 </head>
 <body>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<jsp:include page="header.jsp"></jsp:include>
-  <div class="paper">
- 
-    <div class="summ">
-      <h4><b>Summary</b></h4>
-      <hr>
-      <form>
-        Delivery Details
-      </form>
-      <div class="row">
-        <div class="col">TOTAL PRICE</div>
-      </div>
-      <button class="btn">CHECKOUT</button>
-    </div>
 
-    <div class="Gaddi">
-      <div class="title">
-        <h4><b>Your Items</b></h4>
+<jsp:include page="header.jsp"></jsp:include>
+
+<section class="cart-section">
+
+  <c:choose>
+    <c:when test="${not empty cartItems}">
+      <div class="cart-header">
+        <div>Image</div>
+        <div>Product Name</div>
+        <div>Price</div>
+        <div>Quantity</div>
+        <div>Total</div>
+        <div>Delete</div>
       </div>
-    </div>
-  </div>
-  <jsp:include page="footer.jsp"></jsp:include>
+
+      <c:set var="grandTotal" value="0" />
+      <c:forEach var="item" items="${cartItems}">
+        <c:set var="total" value="${item.price * item.stock}" />
+        <c:set var="grandTotal" value="${grandTotal + total}" />
+
+        <div class="cart-item">
+          <div><img src="${item.imageUrl}" alt="product" width="50" height="50" /></div>
+          <div>${item.name}</div>
+          <div>Rs. ${item.price}</div>
+          <div>${item.stock}</div>
+          <div>Rs. ${total}</div>
+          <div>
+            <form action="remove-from-cart" method="post">
+              <input type="hidden" name="name" value="${item.name}" />
+              <button type="submit">Remove</button>
+            </form>
+          </div>
+        </div>
+      </c:forEach>
+
+      <div class="summary-box">
+        <p><span>Sub Total</span><span>Rs. ${grandTotal}</span></p>
+        <p><span>Shipping</span><span>Rs. 50</span></p>
+        <p><strong>Total</strong><strong>Rs. ${grandTotal + 50}</strong></p>
+        <button>CHECKOUT</button>
+      </div>
+    </c:when>
+    <c:otherwise>
+      <p>Your cart is empty.</p>
+    </c:otherwise>
+  </c:choose>
+
+</section>
+
 </body>
 </html>
