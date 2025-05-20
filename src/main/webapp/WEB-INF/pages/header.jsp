@@ -4,6 +4,7 @@
 <%@ page import="jakarta.servlet.http.HttpSession"%>
 <%@ page import="jakarta.servlet.http.HttpServletRequest"%>
 
+
 <%
 // Initialize necessary objects and variables
 HttpSession userSession = request.getSession(false);
@@ -17,7 +18,7 @@ pageContext.setAttribute("currentUser", currentUser);
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet"
-	href="<%= request.getContextPath() %>/css/header.css?v=<%= System.currentTimeMillis() %>">
+	href="<%=request.getContextPath()%>/css/header.css?v=<%=System.currentTimeMillis()%>">
 
 
 </head>
@@ -93,10 +94,8 @@ pageContext.setAttribute("currentUser", currentUser);
 							href="${contextPath}/product?product_brand=canon">Canon</a>
 					</div>
 				</div>
-
-
 				<div class="search-container">
-					<form action="search" method="Get">
+					<form id="searchForm" action="search" method="get">
 						<i class="search-icon" onclick="toggleSearch()"> <img
 							src="${contextPath}/resources/images/search.png" alt="search"
 							style="height: 35px;">
@@ -106,6 +105,7 @@ pageContext.setAttribute("currentUser", currentUser);
 						<!-- auto submits on Enter -->
 					</form>
 				</div>
+
 			</div>
 
 			<div class="Icons">
@@ -126,17 +126,20 @@ pageContext.setAttribute("currentUser", currentUser);
 					</div>
 				</div>
 				<div class="cart-icon">
-					<a href="${contextPath}/mycart">
-					<img src="${contextPath}/resources/images/mycart.png"></a>
+					<a href="${contextPath}/mycart"> <img
+						src="${contextPath}/resources/images/mycart.png"></a>
 				</div>
 			</div>
 		</nav>
 	</header>
 	<script>
-  function toggleSearch() {
-      const input = document.getElementById('searchInput');
-      input.classList.toggle('show');
-    }
+	function toggleSearch() {
+		  const input = document.getElementById('searchInput');
+		  input.classList.toggle('show');
+		  if (input.classList.contains('show')) {
+		    input.focus(); // Autofocus when shown
+		  }
+		}
 
     let slideIndex = 0;
     showSlides();

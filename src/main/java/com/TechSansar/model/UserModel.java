@@ -12,6 +12,7 @@ public class UserModel {
 	private String number;
 	private String password;
 	private RoleModel role;
+	private String profile_pic;
 
 	public UserModel() {
 	}
@@ -22,7 +23,7 @@ public class UserModel {
 	}
 
 	public UserModel(int id, String firstName, String lastName, String userName, String gender,
-			String email, String number, String password, RoleModel role) {
+			String email, String number, String password, String profile_pic,RoleModel role) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -32,6 +33,7 @@ public class UserModel {
 		this.email = email;
 		this.number = number;
 		this.password = password;
+		this.profile_pic=profile_pic;
 		this.role = role;
 	}
 
@@ -44,6 +46,7 @@ public class UserModel {
 		this.email = email;
 		this.number = number;
 		this.password = password;
+		
 		this.role = role;
 	}
 
@@ -128,6 +131,14 @@ public class UserModel {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getProfile_pic() {
+		return profile_pic;
+	}
+
+	public void setProfile_pic(String profile_pic) {
+		this.profile_pic = profile_pic;
 	}
 
 	public RoleModel getRole() {

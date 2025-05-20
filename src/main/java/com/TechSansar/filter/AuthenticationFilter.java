@@ -23,10 +23,13 @@ public class AuthenticationFilter implements Filter {
 	private static final String HOME = "/home";
 	private static final String ROOT = "/";
 	private static final String DASHBOARD = "/admin/dashboard";
-	private static final String ABOUT = "/about";
-	private static final String CONTACT = "/contact";
+	private static final String ABOUT = "/aboutus";
+	private static final String CONTACT = "/contactus";
 	private static final String PRODUCT = "/product";
-	private static final String CART = "/cart";
+	private static final String CART = "/mycart";
+	private static final String PROFILE = "/profile";
+	private static final String PRODUCT_INFO = "/admin/productinfo";
+	private static final String USERLIST = "/admin/userlist";
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// Initialization logic, if required
@@ -44,6 +47,19 @@ public class AuthenticationFilter implements Filter {
 	    System.out.println("Session username: " + SessionUtil.getAttribute(req, "username"));
 	    System.out.println("Role cookie: " + (CookiesUtil.getCookie(req, "role") != null ? CookiesUtil.getCookie(req, "role").getValue() : "null"));
 	    String contextPath = req.getContextPath();
+	    
+	    if (uri.equals(contextPath + "/logout")) {
+	        // Invalidate session
+	        req.getSession().invalidate();
+	        
+	        // Remove role cookie
+	        CookiesUtil.deleteCookie(res, "role");
+	        
+	        // Redirect to login page or home page after logout
+	        res.sendRedirect(contextPath + LOGIN);
+	        return;  // Don't continue with filter chain
+	    }
+
 
 	    // Allow static resources to pass through
 	    if (uri.endsWith(".png") || uri.endsWith(".jpg") || uri.endsWith(".css")
@@ -56,7 +72,7 @@ public class AuthenticationFilter implements Filter {
 	    boolean isLoggedIn = SessionUtil.getAttribute(req, "username") != null;
 	    String userRole = CookiesUtil.getCookie(req, "role") != null ? CookiesUtil.getCookie(req, "role").getValue() : null;
 
-	    if ("admin".equals(userRole)) {
+	    if ("Admin".equals(userRole)) {
 	        // Admin logged in
 
 	        // Redirect admin away from login or register pages
@@ -75,7 +91,7 @@ public class AuthenticationFilter implements Filter {
 	        res.sendRedirect(contextPath + DASHBOARD);
 	        return;
 
-	    } else if ("user".equals(userRole)) {
+	    } else if ("User".equals(userRole)) {
 	        // User logged in
 
 	        // Redirect user away from login/register pages
@@ -87,13 +103,15 @@ public class AuthenticationFilter implements Filter {
 	        // Allow access to user pages
 	        if (uri.equals(contextPath + HOME) || uri.equals(contextPath + ROOT)
 	                || uri.equals(contextPath + ABOUT) || uri.equals(contextPath + CONTACT)
-	                || uri.equals(contextPath + PRODUCT)|| uri.equals(contextPath + CART)) {
+	                || uri.equals(contextPath + PRODUCT)|| uri.equals(contextPath + CART)
+	                || uri.equals(contextPath + PROFILE)) {
 	            chain.doFilter(request, response);
 	            return;
 	        }
 
 	        // Prevent user from accessing admin dashboard or admin pages
-	        if (uri.equals(contextPath + DASHBOARD) || uri.startsWith(contextPath + "/admin")) {
+	        if (uri.equals(contextPath + DASHBOARD) || uri.equals(contextPath + PRODUCT_INFO)
+	        		|| uri.equals(contextPath + USERLIST)) {
 	            res.sendRedirect(contextPath + HOME);
 	            return;
 	        }
@@ -108,7 +126,7 @@ public class AuthenticationFilter implements Filter {
 	        // Allow access to login, register, home, root, product, and admin login page
 	        if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(contextPath + HOME)
 	                || uri.equals(contextPath + ROOT) || uri.equals(contextPath + PRODUCT)
-	                || uri.equals(contextPath + DASHBOARD)) {
+	                || uri.equals(contextPath + ABOUT)|| uri.equals(contextPath + CONTACT)) {
 	            chain.doFilter(request, response);
 	            return;
 	        }

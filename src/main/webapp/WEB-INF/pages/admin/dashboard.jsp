@@ -24,32 +24,24 @@ if (!"Admin".equalsIgnoreCase(role)) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" 
   href="<%= request.getContextPath() %>/css/admin/dashboard.css?v=<%= System.currentTimeMillis() %>">
 </head>
 <body>
-  <div class="container">
+<div class="container">
     <!-- Sidebar -->
     <div class="sidebar">
       <h2>Inventory Management</h2>
-      <a href="#" class="nav-link active">Dashboard</a>
-      <a href="#" class="nav-link">Product Information</a>
-      <a href="#" class="nav-link">User Information</a>
+      <a href="${pageContext.request.contextPath}/admin/dashboard" class="nav-link active">Dashboard</a>
+   	  <a href="${pageContext.request.contextPath}/admin/productinfo" class="nav-link">Product Information</a>
+      <a href="${pageContext.request.contextPath}/admin/userlist" class="nav-link">User Information</a>
+      <a href="${pageContext.request.contextPath}/admin/addproduct" class="nav-link">Add Product</a>
     </div>
-
     <!-- Main Content -->
     <div class="main">
       <div class="dashboard-header">
         <h1>Dashboard</h1>
-        <div class="admin-menu" onclick="toggleDropdown()">Admin ▼
-          <div class="dropdown" id="dropdownMenu">
-            <a href="#">Settings</a>
-            <a href="#">Logout</a>
-          </div>
-        </div>
       </div>
-
       <section class="section-box">
         <h3>Recently Added to Cart</h3>
         <div class="orders">
@@ -69,9 +61,7 @@ if (!"Admin".equalsIgnoreCase(role)) {
           </div>
         </div>
       </section>
+    </div>  
     </div>
-  </div>
-
-  
 </body>
 </html>

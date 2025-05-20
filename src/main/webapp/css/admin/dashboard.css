@@ -4,8 +4,7 @@
       font-family: 'Inter', sans-serif;
       background-color: #f8f8f8;
     }
-
-    .container {
+.container {
       display: flex;
       min-height: 100vh;
     }
@@ -40,11 +39,6 @@
       background-color: #f9eaea;
     }
 
-    .main {
-      flex-grow: 1;
-      padding: 30px;
-    }
-
     .dashboard-header {
       display: flex;
       justify-content: space-between;
@@ -56,38 +50,6 @@
       font-size: 22px;
       margin: 0;
     }
-
-    .admin-menu {
-      font-size: 14px;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .dropdown {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: 100%;
-      background-color: white;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-top: 10px;
-      min-width: 150px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      z-index: 10;
-    }
-
-    .dropdown a {
-      display: block;
-      padding: 10px;
-      text-decoration: none;
-      color: #333;
-    }
-
-    .dropdown a:hover {
-      background-color: #f2f2f2;
-    }
-
     .section-box {
       background-color: #ffffff;
       border: 2px solid #861819;

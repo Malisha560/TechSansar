@@ -77,7 +77,7 @@ public class DashboardService {
                     rs.getString("imageUrl"),
                     rs.getInt("product_price"),
                     rs.getString("product_description"),
-                    rs.getInt("stock")
+                    rs.getInt("stock"), null
                 ));
             }
         } catch (SQLException e) {

@@ -80,5 +80,33 @@ public class ProductService {
         }
         return products;
     }
+    public List<ProductModel> searchProductsByKeyword(String keyword) {
+        List<ProductModel> products = new ArrayList<>();
+        String query = "SELECT * FROM product WHERE product_brand LIKE ? OR product_name LIKE ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            String wildcard = "%" + keyword + "%";
+            stmt.setString(1, wildcard);
+            stmt.setString(2, wildcard);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ProductModel product = new ProductModel();
+                    product.setName(rs.getString("product_name"));
+                    product.setDescription(rs.getString("product_description"));
+                    product.setPrice(rs.getInt("product_price"));
+                    product.setImageUrl(rs.getString("imageUrl"));
+                    products.add(product);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return products;
+    }
 
 }

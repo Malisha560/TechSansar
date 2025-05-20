@@ -1,6 +1,6 @@
 
 @charset "UTF-8";
-form {
+.green {
     max-width: 600px;
     margin: 40px auto;
     padding: 30px;
@@ -23,15 +23,15 @@ form {
     flex-direction: column;
 }
 
-label {
+.green label {
     font-weight: bold;
     margin-bottom: 5px;
     color: #333;
 }
 
-input[type="text"],
-input[type="password"],
-select {
+.green input[type="text"],
+.green input[type="password"],
+.green select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 6px;
@@ -40,13 +40,13 @@ select {
     transition: border 0.2s;
 }
 
-input:focus,
-select:focus {
+.green input:focus,
+.green select:focus {
     border-color: #3498db;
     outline: none;
 }
 
-button[type="submit"] {
+.green button[type="submit"] {
     background-color: #102E50;
     color: white;
     padding: 10px 20px;
@@ -58,11 +58,11 @@ button[type="submit"] {
     margin-top: 10px;
 }
 
-button[type="submit"]:hover {
+.green button[type="submit"]:hover {
     background-color: #1b70d1;
 }
 
-a.register-button{
+.green .register-button{
     display: block;
     text-align: center;
     margin-top: 15px;
@@ -71,7 +71,7 @@ a.register-button{
     font-weight: bold;
 }
 
-a:hover {
+.green .register-button:hover {
     text-decoration: underline;
     color: #1b70d1;
 }

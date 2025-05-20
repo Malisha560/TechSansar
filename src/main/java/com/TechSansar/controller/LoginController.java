@@ -72,6 +72,7 @@ public class LoginController extends HttpServlet {
 	        if ("Admin".equalsIgnoreCase(role)) {
 	            resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
 	        } else {
+	        	
 	            resp.sendRedirect(req.getContextPath() + "/home");
 	        }
 	    }else {

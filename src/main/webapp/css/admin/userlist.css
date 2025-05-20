@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f5f5f5;
+    }
+.container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #ffffff;
+      padding: 20px;
+      border-right: 1px solid #861819;
+    }
+
+    .sidebar h2 {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #861819;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 12px 10px;
+      color: #333333;
+      text-decoration: none;
+      font-weight: 500;
+      border-left: 4px solid transparent;
+      margin-bottom: 10px;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #861819;
+      border-left: 4px solid #861819;
+      background-color: #f9eaea;
+    }
+
+    .content {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .title {
+      color: #861819;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .user-header, .user-row {
+      display: flex;
+      background-color: #fff;
+      padding: 16px 20px;
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      align-items: center;
+    }
+
+    .user-header {
+      background-color: #861819;
+      color: white;
+      font-weight: bold;
+    }
+
+    .user-cell {
+      padding: 0 10px;
+      font-size: 14px;
+    }
+
+    .user-cell.firstname { width: 200px; }
+    .user-cell.lastname { width: 200px; }
+    .user-cell.email { flex: 1; }
+    .user-cell.number { width: 150px; }
+
+    .user-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }

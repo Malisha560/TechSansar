@@ -18,7 +18,7 @@ href="${pageContext.request.contextPath}/css/footer.css" />
 <body>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <jsp:include page="header.jsp"></jsp:include>
-<form action="${contextPath}/login" method="post">
+<form action="${contextPath}/login" method="post" class="green">
     <div class="row">
         <div class="col">
             <label for="username">Username:</label>

@@ -35,6 +35,11 @@ public class ProductController extends HttpServlet {
         List<ProductModel> product = productService.getProductsByBrand(brand, page, itemsPerPage);
         int totalProducts = productService.countProductsByBrand(brand);
         int totalPages = (int) Math.ceil(totalProducts / (double) itemsPerPage);
+        
+        String success = req.getParameter("success");
+        if ("true".equals(success)) {
+            req.setAttribute("message", "Item added to cart successfully!");
+        }
 
         req.setAttribute("product", product);
         req.setAttribute("brand", brand);

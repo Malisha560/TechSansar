@@ -6,12 +6,15 @@ import com.TechSansar.model.UserModel;
 import com.TechSansar.service.ProfileService;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 
+@MultipartConfig
 @WebServlet("/profile")
 public class ProfileController extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -41,4 +44,61 @@ public class ProfileController extends HttpServlet {
         session.setAttribute("user", user); // So profile.jsp can use it
         request.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(request, response);
     }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("username") == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
+        request.setCharacterEncoding("UTF-8");
+
+        String username = request.getParameter("username");
+        String fullName = request.getParameter("fullName");
+        String phone = request.getParameter("phone");
+        String gender = request.getParameter("gender");
+
+        String firstName = null;
+        String lastName = null;
+
+        if (fullName != null && !fullName.trim().isEmpty()) {
+            String[] names = fullName.trim().split(" ", 2);
+            firstName = names[0];
+            lastName = names.length > 1 ? names[1] : "";
+        }
+
+
+        // Optional: handle profile picture upload
+        Part filePart = request.getPart("profilePic");
+        String profilePicName = null;
+        if (filePart != null && filePart.getSize() > 0) {
+            String fileName = username + "_profile.jpg";
+            String uploadPath = getServletContext().getRealPath("/") + "uploads";
+            new java.io.File(uploadPath).mkdirs(); // ensure directory exists
+            filePart.write(uploadPath + "/" + fileName);
+            profilePicName = "uploads/" + fileName;
+        }
+
+        UserModel updatedUser = new UserModel();
+        updatedUser.setUserName(username);
+        updatedUser.setFirstName(firstName);
+        updatedUser.setLastName(lastName);
+        updatedUser.setNumber(phone);
+        updatedUser.setGender(gender);
+
+        if (profilePicName != null) {
+            updatedUser.setProfile_pic(profilePicName);
+        }
+
+        boolean updated = profileService.updateUserProfile(updatedUser);
+
+        if (updated) {
+            session.setAttribute("user", profileService.getUserByUsername(username));
+        }
+
+        response.sendRedirect("profile");
+    }
+
 }

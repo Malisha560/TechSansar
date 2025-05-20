@@ -14,8 +14,10 @@
 <body>
   <c:set var="contextPath" value="${pageContext.request.contextPath}" />
   <jsp:include page="header.jsp" />
-
-  <div class="products">
+	<c:if test="${not empty message}">
+		<div class="popup-message">${message}</div>
+	</c:if>
+	<div class="products">
     <!-- Skeleton View -->
     <c:if test="${showSkeleton}">
       <div class="product-card">
@@ -42,11 +44,12 @@
             <span class="price">Rs. ${productItem.price}</span>
           </div>
           <!-- Add to Cart -->
-					<form action="<%=request.getContextPath()%>/cart" method="post">
+					<form action="${pageContext.request.contextPath}/mycart"
+						method="post">
 						<input type="hidden" name="name" value="${productItem.name}" /> <input
 							type="hidden" name="price" value="${productItem.price}" /> <input
 							type="hidden" name="image" value="${productItem.imageUrl}" />
-						<button type="submit">Add to Cart</button>
+						<button type="submit" class="add-to-cart">Add to Cart</button>
 					</form>
 				</div>
       </c:forEach>
