@@ -30,6 +30,9 @@ public class AuthenticationFilter implements Filter {
 	private static final String PROFILE = "/profile";
 	private static final String PRODUCT_INFO = "/admin/productinfo";
 	private static final String USERLIST = "/admin/userlist";
+	private static final String AAYUSHCV = "/aayushcv";
+	private static final String BIJEMCV = "/bijemcv";
+	private static final String MALICV = "/malicv";
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// Initialization logic, if required
@@ -41,25 +44,22 @@ public class AuthenticationFilter implements Filter {
 
 	    HttpServletRequest req = (HttpServletRequest) request;
 	    HttpServletResponse res = (HttpServletResponse) response;
-	    
+
 	    String uri = req.getRequestURI();
-	    System.out.println("URI: " + uri);
-	    System.out.println("Session username: " + SessionUtil.getAttribute(req, "username"));
-	    System.out.println("Role cookie: " + (CookiesUtil.getCookie(req, "role") != null ? CookiesUtil.getCookie(req, "role").getValue() : "null"));
+	   
 	    String contextPath = req.getContextPath();
-	    
+
 	    if (uri.equals(contextPath + "/logout")) {
 	        // Invalidate session
 	        req.getSession().invalidate();
-	        
+
 	        // Remove role cookie
 	        CookiesUtil.deleteCookie(res, "role");
-	        
+
 	        // Redirect to login page or home page after logout
 	        res.sendRedirect(contextPath + LOGIN);
 	        return;  // Don't continue with filter chain
 	    }
-
 
 	    // Allow static resources to pass through
 	    if (uri.endsWith(".png") || uri.endsWith(".jpg") || uri.endsWith(".css")
@@ -71,6 +71,12 @@ public class AuthenticationFilter implements Filter {
 
 	    boolean isLoggedIn = SessionUtil.getAttribute(req, "username") != null;
 	    String userRole = CookiesUtil.getCookie(req, "role") != null ? CookiesUtil.getCookie(req, "role").getValue() : null;
+
+	    // Allow unauthenticated users to access the profile pages
+	    if (uri.equals(contextPath + AAYUSHCV) || uri.equals(contextPath + BIJEMCV) || uri.equals(contextPath + MALICV) || uri.startsWith(contextPath + "/cv")) {
+	        chain.doFilter(request, response);
+	        return;
+	    }
 
 	    if ("Admin".equals(userRole)) {
 	        // Admin logged in
@@ -103,7 +109,7 @@ public class AuthenticationFilter implements Filter {
 	        // Allow access to user pages
 	        if (uri.equals(contextPath + HOME) || uri.equals(contextPath + ROOT)
 	                || uri.equals(contextPath + ABOUT) || uri.equals(contextPath + CONTACT)
-	                || uri.equals(contextPath + PRODUCT)|| uri.equals(contextPath + CART)
+	                || uri.equals(contextPath + PRODUCT) || uri.equals(contextPath + CART)
 	                || uri.equals(contextPath + PROFILE)) {
 	            chain.doFilter(request, response);
 	            return;
@@ -111,7 +117,7 @@ public class AuthenticationFilter implements Filter {
 
 	        // Prevent user from accessing admin dashboard or admin pages
 	        if (uri.equals(contextPath + DASHBOARD) || uri.equals(contextPath + PRODUCT_INFO)
-	        		|| uri.equals(contextPath + USERLIST)) {
+	                || uri.equals(contextPath + USERLIST)) {
 	            res.sendRedirect(contextPath + HOME);
 	            return;
 	        }
@@ -123,10 +129,12 @@ public class AuthenticationFilter implements Filter {
 	    } else {
 	        // Not logged in
 
-	        // Allow access to login, register, home, root, product, and admin login page
+	        // Allow access to login, register, home, root, product, and profile pages
 	        if (uri.endsWith(LOGIN) || uri.endsWith(REGISTER) || uri.equals(contextPath + HOME)
 	                || uri.equals(contextPath + ROOT) || uri.equals(contextPath + PRODUCT)
-	                || uri.equals(contextPath + ABOUT)|| uri.equals(contextPath + CONTACT)) {
+	                || uri.equals(contextPath + ABOUT) || uri.equals(contextPath + CONTACT)
+	                || uri.equals(contextPath + AAYUSHCV) || uri.equals(contextPath + BIJEMCV)
+	                || uri.equals(contextPath + MALICV) || uri.startsWith(contextPath + "/cv")) {
 	            chain.doFilter(request, response);
 	            return;
 	        }
@@ -135,7 +143,6 @@ public class AuthenticationFilter implements Filter {
 	        res.sendRedirect(contextPath + LOGIN);
 	        return;
 	    }
-	    
 	}
 
 

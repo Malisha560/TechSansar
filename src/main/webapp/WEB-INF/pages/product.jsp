@@ -9,7 +9,7 @@
   <title>TechSansar</title>
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/product.css?v=<%= System.currentTimeMillis() %>">
   <link rel="stylesheet" href="<%= request.getContextPath() %>/css/header.css?v=<%= System.currentTimeMillis() %>">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css" />
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/css/footer.css?v=<%= System.currentTimeMillis() %>">
 </head>
 <body>
   <c:set var="contextPath" value="${pageContext.request.contextPath}" />

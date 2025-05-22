@@ -1,56 +1,67 @@
 @charset "UTF-8";
- .footer {
-      background-color: #1F2937;
-      color: #F9FAFB;
-      padding: 40px 20px;
-    }
+body {
+    font-family: 'Roboto', sans-serif;
+}
 
-    .footer-container {
-      max-width: 1200px;
-      margin: auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
+.footer {
+    background-color: #2a373d;
+    color: #F9FAFB;
+    padding: 40px 20px;
+}
 
-    .footer-section {
-      flex: 1 1 250px;
-      margin-bottom: 20px;
-    }
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
 
-    .footer h3,
-    .footer h4 {
-      color: #FFFFFF;
-      margin-bottom: 10px;
-    }
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 20px;
+    padding: 0 15px;
+    text-align: center;
+}
 
-    .footer p,
-    .footer a {
-      font-size: 14px;
-      color: #D1D5DB;
-      text-decoration: none;
-      margin: 5px 0;
-      display: block;
-    }
+.footer h3,
+.footer h4 {
+    color: #FFFFFF;
+    margin-bottom: 15px;
+}
 
-    .footer a:hover {
-      color: #FFFFFF;
-    }
+.footer p,
+.footer a {
+    font-size: 14px;
+    color: #D1D5DB;
+    text-decoration: none;
+    margin: 8px 0;
+    display: block;
+}
 
-    .social-icons {
-      display: flex;
-      gap: 10px;
-    }
+.footer a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
 
-    .social-icons img {
-      height: 24px;
-      width: 24px;
-      cursor: pointer;
-    }
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
 
-    .footer-bottom {
-      text-align: center;
-      padding-top: 20px;
-      font-size: 13px;
-      color: #9CA3AF;
-    }
+.social-icons img {
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid #374151;
+    font-size: 13px;
+    color: #9CA3AF;
+}

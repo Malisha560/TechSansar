@@ -18,9 +18,8 @@ href="${pageContext.request.contextPath}/css/footer.css"/>
 
       <div class="footer-section">
         <a href="home.html">Home</a>
-        <a href="laptop.html">Laptops</a>
-        <a href="accessories.html">Accessories</a>
-        <a href="about us.html">About Us</a>
+        <a href="laptop.html">About Us</a>
+        <a href="accessories.html">Contact</a>
       </div>
 
       <div class="footer-section">

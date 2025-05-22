@@ -81,9 +81,9 @@ public class AddProductController extends HttpServlet {
         boolean success = service.addProduct(product);
 
         if (success) {
-            response.sendRedirect("all-products.jsp?msg=Product+added+successfully");
+        	response.sendRedirect(request.getContextPath() + "/admin/productinfo?msg=Product+added+successfully");
         } else {
-            response.sendRedirect("add_product.jsp?error=Failed+to+add+product");
+            response.sendRedirect(request.getContextPath() + "/admin/addproduct.jsp?error=Failed+to+add+product");
         }
     }
 

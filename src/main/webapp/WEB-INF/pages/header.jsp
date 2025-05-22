@@ -31,8 +31,9 @@ pageContext.setAttribute("currentUser", currentUser);
 				<p>Your Perfect Laptop, Just a Click Away</p>
 			</div>
 			<div class="top-nav-right">
-				<a>Putalisadak, Kathmandu</a> <a href="${contextPath}/contactus">|
-					Contact us |</a> <a href="${contextPath}/aboutus">| About Us |</a>
+				<a>Putalisadak, Kathmandu</a> 
+				<a href="${contextPath}/contactus">| Contact us |</a> 
+					<a href="${contextPath}/aboutus">| About Us |</a>
 			</div>
 		</div>
 
@@ -141,62 +142,7 @@ pageContext.setAttribute("currentUser", currentUser);
 		  }
 		}
 
-    let slideIndex = 0;
-    showSlides();
-
-    function showSlides() {
-      let i;
-      let slides = document.getElementsByClassName("imageslider"); // updated class name
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-      }
-      slideIndex++;
-      if (slideIndex > slides.length) { slideIndex = 1 }
-      slides[slideIndex - 1].style.display = "block";
-      setTimeout(showSlides, 2000); // Change image every 2 seconds
-    }
-
-    const track = document.getElementById('carouselTrack');
-    const left = document.getElementById('left');
-    const right = document.getElementById('right');
-
-    let scrollAmount = 0;
-    const scrollStep = 400; // pixels
-
-    right.addEventListener('click', () => {
-      track.scrollBy({ left: scrollStep, behavior: 'smooth' });
-    });
-
-    left.addEventListener('click', () => {
-      track.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-    });
-
-    let offerEnd = new Date().getTime() + (
-      (5 * 24 * 60 * 60 * 1000) +
-      (17 * 60 * 60 * 1000) +
-      (15 * 60 * 1000)
-    );
-
-    function updateCountdown1() {
-      const now = new Date().getTime();
-      const distance = offerEnd - now;
-
-      if (distance < 0) {
-        document.getElementById("countdown1").innerText = "00:00:00:00";
-        return;
-      }
-
-      let days = Math.floor(distance / (1000 * 60 * 60 * 24))
-      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      document.getElementById("days1").innerText = String(days).padStart(2, '0');
-      document.getElementById("hours1").innerText = String(hours).padStart(2, '0');
-      document.getElementById("minutes1").innerText = String(minutes).padStart(2, '0');
-      document.getElementById("seconds1").innerText = String(seconds).padStart(2, '0');
-    }
-    setInterval(updateCountdown1, 1000);
+   
   </script>
 </body>
 </html>

@@ -6,7 +6,8 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: sans-serif;
+      font-family: 'Roboto', sans-serif;
+      font-style:black;
       background: #fff;
 
     }
@@ -16,7 +17,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #D11D27;
+      background-color: #861819;
       color: #fff;
       width: 100%;
       padding: 5px 40px;
@@ -27,7 +28,7 @@
     .top-nav-left p {
       margin: 0;
       font-size: medium;
-      font-family: Georgia, 'Times New Roman', Times, serif;
+      font-family:sans-serif;
     }
 
     /* top nav right style */
@@ -57,7 +58,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: #e7e6e6;
       border-radius: 65px;
       gap: 75px;
       padding: 10px 30px;

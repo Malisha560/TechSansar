@@ -62,7 +62,7 @@ href="${pageContext.request.contextPath}/css/footer.css" />
        		<div class="row">
            		<div class="col">
                		<label for="phoneNumber">Phone Number:</label> <input type="tel"
-                   	id="phoneNumber" name="phoneNumber" required>
+                   	id="number" name="number" required>
            		</div>
        		</div>
        		<div class="row">

@@ -39,7 +39,7 @@ public class DashboardService {
     public String getTotalUsers() {
         if (isConnectionError) return null;
 
-        String query = "SELECT COUNT(*) AS total FROM user";
+        String query = "SELECT COUNT(*) AS total FROM users WHERE role_id = 2";
         try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
             ResultSet result = stmt.executeQuery();
             if (result.next()) return result.getString("total");
@@ -49,20 +49,6 @@ public class DashboardService {
         return null;
     }
 
-    public String getTotalOrders() {
-        if (isConnectionError) return null;
-
-        String query = "SELECT COUNT(*) AS total FROM orders";
-        try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
-            ResultSet result = stmt.executeQuery();
-            if (result.next()) return result.getString("total");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    
 
     public List<ProductModel> getLowStockProducts() {
         if (isConnectionError) return null;

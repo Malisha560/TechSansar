@@ -23,7 +23,8 @@ public class DbConfig {
 	 * @throws SQLException           if a database access error occurs
 	 * @throws ClassNotFoundException if the JDBC driver class is not found
 	 */
-	public static Connection getDbConnection() throws SQLException, ClassNotFoundException {
+	public static Connection getDbConnection() 
+			throws SQLException, ClassNotFoundException {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		return DriverManager.getConnection(URL, USERNAME, PASSWORD);
 	}

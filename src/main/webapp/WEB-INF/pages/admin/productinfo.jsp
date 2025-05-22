@@ -19,7 +19,7 @@
 <div class="container">
     <!-- Sidebar -->
     <div class="sidebar">
-      <h2>Inventory Management</h2>
+      <h2>TechSansar</h2>
       <a href="${pageContext.request.contextPath}/admin/dashboard" class="nav-link">Dashboard</a>
    	  <a href="${pageContext.request.contextPath}/admin/productinfo" class="nav-link active">Product Information</a>
       <a href="${pageContext.request.contextPath}/admin/userlist" class="nav-link">User Information</a>

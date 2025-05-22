@@ -18,9 +18,9 @@ public class AddProductService {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, product.getName());
             ps.setString(2, product.getDescription());
-            ps.setString(3, product.getDescription());
+            ps.setString(3, product.getProduct_brand()); 
             ps.setInt(4, product.getPrice());
-            ps.setString(5, product.getImageUrl()); // This can be null or filename
+            ps.setString(5, product.getImageUrl());
 
             int rows = ps.executeUpdate();
             isSuccess = rows > 0;

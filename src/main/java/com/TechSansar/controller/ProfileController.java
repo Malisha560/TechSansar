@@ -1,10 +1,9 @@
 package com.TechSansar.controller;
 
 import java.io.IOException;
-
 import com.TechSansar.model.UserModel;
 import com.TechSansar.service.ProfileService;
-
+import com.TechSansar.util.ImageUtil; // Include ImageUtil for validation
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,7 +32,7 @@ public class ProfileController extends HttpServlet {
 
         String username = (String) session.getAttribute("username");
 
-        //  Fetch full user details using ProfileService (e.g., from DB)
+        // Fetch full user details using ProfileService (e.g., from DB)
         UserModel user = profileService.getUserByUsername(username); // <== implement this
 
         if (user == null) {
@@ -44,6 +43,7 @@ public class ProfileController extends HttpServlet {
         session.setAttribute("user", user); // So profile.jsp can use it
         request.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(request, response);
     }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -69,18 +69,25 @@ public class ProfileController extends HttpServlet {
             lastName = names.length > 1 ? names[1] : "";
         }
 
-
-        // Optional: handle profile picture upload
+        // Optional: handle profile picture upload with validation
         Part filePart = request.getPart("profilePic");
         String profilePicName = null;
+
         if (filePart != null && filePart.getSize() > 0) {
-            String fileName = username + "_profile.jpg";
-            String uploadPath = getServletContext().getRealPath("/") + "uploads";
-            new java.io.File(uploadPath).mkdirs(); // ensure directory exists
-            filePart.write(uploadPath + "/" + fileName);
-            profilePicName = "uploads/" + fileName;
+            ImageUtil imageUtil = new ImageUtil();
+            boolean isUploaded = imageUtil.uploadImage(filePart, getServletContext().getRealPath("/"), "profilePics");
+
+            if (!isUploaded) {
+                request.setAttribute("errorMessage", "File upload failed. Ensure the file is of valid type and size.");
+                request.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(request, response);
+                return; // Exit if validation failed
+            }
+
+            // Construct file name and path for the uploaded image
+            profilePicName = "profilePics/" + imageUtil.getImageNameFromPart(filePart);
         }
 
+        // Create the UserModel object with the updated profile details
         UserModel updatedUser = new UserModel();
         updatedUser.setUserName(username);
         updatedUser.setFirstName(firstName);
@@ -89,16 +96,17 @@ public class ProfileController extends HttpServlet {
         updatedUser.setGender(gender);
 
         if (profilePicName != null) {
-            updatedUser.setProfile_pic(profilePicName);
+            updatedUser.setProfile_pic(profilePicName); // Set profile picture path if uploaded
         }
 
+        // Update the profile information in the database
         boolean updated = profileService.updateUserProfile(updatedUser);
 
         if (updated) {
             session.setAttribute("user", profileService.getUserByUsername(username));
         }
 
+        // Redirect back to the profile page
         response.sendRedirect("profile");
     }
-
 }

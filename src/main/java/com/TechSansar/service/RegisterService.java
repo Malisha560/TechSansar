@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import com.TechSansar.config.DbConfig;
 import com.TechSansar.model.UserModel;
 
-
-
 /**
  * RegisterService handles the registration of new students. It manages database
  * interactions for student registration.
@@ -37,41 +35,48 @@ public class RegisterService {
 	 * @return Boolean indicating the success of the operation
 	 */
 	public Boolean registerUser(UserModel userModel) {
-		if (dbConn == null) {
-			System.err.println("Database connection is not available.");
-			return null;
-		}
+	    if (dbConn == null) {
+	        System.err.println("Database connection is not available.");
+	        return null;
+	    }
 
-		String roleQuery = "SELECT role_id FROM role WHERE name = ?";
-		String insertQuery = "INSERT INTO users (first_name, last_name, username, gender, email, number, password, role_id) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	    // Check if the 'number' is not null or empty
+	    if (userModel.getNumber() == null || userModel.getNumber().isEmpty()) {
+	        System.err.println("Phone number cannot be empty.");
+	        return null;
+	    }
 
-		try (PreparedStatement roleStmt = dbConn.prepareStatement(roleQuery);
-			 PreparedStatement insertStmt = dbConn.prepareStatement(insertQuery)) {
-			
-			String encryptedPassword = userModel.getPassword(); // Already encrypted
+	    String roleQuery = "SELECT role_id FROM role WHERE name = ?";
+	    String insertQuery = "INSERT INTO users (first_name, last_name, username, gender, email, number, password,profile_pic, role_id) "
+	            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)";
 
-			if (encryptedPassword == null) {
-			    System.err.println("Encryption failed for user: " + userModel.getUserName());
-			    return null;
-			}
+	    try (PreparedStatement roleStmt = dbConn.prepareStatement(roleQuery);
+	         PreparedStatement insertStmt = dbConn.prepareStatement(insertQuery)) {
 
-			
-			// Insert student details
-			insertStmt.setString(1, userModel.getFirstName());
-			insertStmt.setString(2, userModel.getLastName());
-			insertStmt.setString(3, userModel.getUserName());
-			insertStmt.setString(4, userModel.getGender());
-			insertStmt.setString(5, userModel.getEmail());
-			insertStmt.setString(6, userModel.getNumber());
-			insertStmt.setString(7, encryptedPassword);
-			insertStmt.setInt(8, 2);
+	        String encryptedPassword = userModel.getPassword(); // Already encrypted
 
-			return insertStmt.executeUpdate() > 0;
-		} catch (SQLException e) {
-			System.err.println("Error during user registration: " + e.getMessage());
-			e.printStackTrace();
-			return null;
-		}
+	        if (encryptedPassword == null) {
+	            System.err.println("Encryption failed for user: " + userModel.getUserName());
+	            return null;
+	        }
+
+	        // Insert user details
+	        insertStmt.setString(1, userModel.getFirstName());
+	        insertStmt.setString(2, userModel.getLastName());
+	        insertStmt.setString(3, userModel.getUserName());
+	        insertStmt.setString(4, userModel.getGender());
+	        insertStmt.setString(5, userModel.getEmail());
+	        insertStmt.setString(6, userModel.getNumber());
+	        insertStmt.setString(7, encryptedPassword);
+	        insertStmt.setString(8, "default.jpg");
+	        insertStmt.setInt(9, 2); // role_id is 2 for user
+
+	        return insertStmt.executeUpdate() > 0;
+	    } catch (SQLException e) {
+	        System.err.println("Error during user registration: " + e.getMessage());
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
+
 }

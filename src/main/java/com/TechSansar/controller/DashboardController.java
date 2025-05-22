@@ -38,14 +38,11 @@ public class DashboardController extends HttpServlet {
             // Fetch dashboard stats from service
             String totalProducts = dashboardService.getTotalProducts();
             String totalUsers = dashboardService.getTotalUsers();
-            String totalOrders = dashboardService.getTotalOrders();
-
             List<ProductModel> lowStockProducts = dashboardService.getLowStockProducts();
 
             // Set attributes for JSP
             request.setAttribute("totalProducts", totalProducts);
             request.setAttribute("totalUsers", totalUsers);
-            request.setAttribute("totalOrders", totalOrders);
             request.setAttribute("lowStockProducts", lowStockProducts);
 
             // Forward to dashboard JSP

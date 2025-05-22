@@ -1,27 +1,39 @@
 package com.TechSansar.controller;
 
+import com.TechSansar.model.CartModel;
 import com.TechSansar.model.ProductModel;
+import com.TechSansar.service.CartService;
+import com.TechSansar.util.SessionUtil;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @WebServlet("/mycart")
 public class CartController extends HttpServlet {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    private final CartService cartService = new CartService();
 
-	@Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // Retrieve user data from session
+        String username = (String) SessionUtil.getAttribute(request, "username");
+        Integer userId = (Integer) SessionUtil.getAttribute(request, "userId");
+
+        // If userId is null, redirect to login
+        if (userId == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return; // Ensure that no further processing occurs after the redirect
+        }
+
+        // If the user is logged in, proceed with cart handling
         HttpSession session = request.getSession();
         List<ProductModel> cart = (List<ProductModel>) session.getAttribute("cart");
 
@@ -38,9 +50,20 @@ public class CartController extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/pages/mycart.jsp").forward(request, response);
     }
 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        // Retrieve user data from session
+        String username = (String) SessionUtil.getAttribute(request, "username");
+        Integer userId = (Integer) SessionUtil.getAttribute(request, "userId");
+
+        // If userId is null, redirect to login
+        if (userId == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return; // Ensure that no further processing occurs after the redirect
+        }
 
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
@@ -75,14 +98,21 @@ public class CartController extends HttpServlet {
                 cart.add(product);
             }
 
-            session.setAttribute("cart", cart);
+            // Save to database
+            CartModel cartModel = new CartModel();
+            cartModel.setUserId(userId);  // Use the session's userId
+            cartModel.setProductName(name);
+            cartModel.setImageUrl(image);
+            cartModel.setPrice(price);
+            cartModel.setQuantity(1); // Default quantity is 1, can be updated later.
+            cartService.addProductToCart(cartModel);
 
-            String brand = request.getParameter("brand"); 
+            session.setAttribute("cart", cart);
             response.sendRedirect(request.getContextPath() + "/mycart?success=true");
             return;
         }
 
-        // Handle other actions: remove or update
+        // Handle other actions (remove or update)
         String name = request.getParameter("name");
         if ("remove".equals(action)) {
             // Remove product from cart
@@ -95,16 +125,10 @@ public class CartController extends HttpServlet {
                 }
             }
         } else if ("decrease".equals(action)) {
-            Iterator<ProductModel> iterator = cart.iterator();
-            while (iterator.hasNext()) {
-                ProductModel p = iterator.next();
+            cart.removeIf(p -> p.getName().equals(name) && p.getStock() == 0);
+            for (ProductModel p : cart) {
                 if (p.getName().equals(name)) {
-                    int newQty = p.getStock() - 1;
-                    if (newQty > 0) {
-                        p.setStock(newQty);
-                    } else {
-                        iterator.remove();
-                    }
+                    p.setStock(p.getStock() - 1);
                     break;
                 }
             }
@@ -113,4 +137,5 @@ public class CartController extends HttpServlet {
         session.setAttribute("cart", cart);
         response.sendRedirect(request.getContextPath() + "/mycart");
     }
+
 }

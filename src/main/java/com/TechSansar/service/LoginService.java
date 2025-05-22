@@ -72,6 +72,25 @@ public class LoginService {
         }
         return null;
     }
+    
+    public int getUserIdByUsername(String username) {
+        if (isConnectionError) {
+            return -1; // Error case
+        }
+
+        String query = "SELECT user_id FROM users WHERE username = ?";
+        try (PreparedStatement stmt = dbConn.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet result = stmt.executeQuery();
+            if (result.next()) {
+                return result.getInt("user_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Error if no user found
+    }
+
 
 
     /**

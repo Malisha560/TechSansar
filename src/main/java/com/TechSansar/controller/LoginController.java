@@ -53,8 +53,8 @@ public class LoginController extends HttpServlet {
 	 * @throws IOException      if an I/O error occurs
 	 */
 	@Override
-
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
+			throws ServletException, IOException {
 	    String username = req.getParameter("username");
 	    String password = req.getParameter("password");
 
@@ -62,20 +62,28 @@ public class LoginController extends HttpServlet {
 	    Boolean loginStatus = loginService.loginUser(userModel);
 
 	    if (loginStatus != null && loginStatus) {
+	        // Get user_id from the service
+	        int userId = loginService.getUserIdByUsername(username);
+
+	        // Store user_id and username in session
+	        SessionUtil.setAttribute(req, "userId", userId);
 	        SessionUtil.setAttribute(req, "username", username);
+
+	        // Get role and store it in session and as a cookie
 	        String role = loginService.getRoleByUsername(username);
-	        SessionUtil.setAttribute(req, "role", role);  
+	        SessionUtil.setAttribute(req, "role", role);
 	        CookiesUtil.addCookie(resp, "role", role, 5 * 30);
-	        
+
 	        System.out.println("User logged in with role: " + role);
 
+	        // Redirect based on the role
 	        if ("Admin".equalsIgnoreCase(role)) {
 	            resp.sendRedirect(req.getContextPath() + "/admin/dashboard");
 	        } else {
-	        	
 	            resp.sendRedirect(req.getContextPath() + "/home");
 	        }
-	    }else {
+	    } else {
+	        // Handle login failure
 	        handleLoginFailure(req, resp, loginStatus);
 	    }
 	}

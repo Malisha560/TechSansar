@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
 /**
  * RegisterController handles user registration requests and processes form
  * submissions. It also manages file uploads and account creation.
@@ -37,7 +36,7 @@ public class RegisterController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			// Validate and extract student model
+// Validate and extract student model
 			String validationMessage = validateRegistrationForm(req);
 			if (validationMessage != null) {
 				handleError(req, resp, validationMessage);
@@ -67,10 +66,10 @@ public class RegisterController extends HttpServlet {
 		String username = req.getParameter("username");
 		String gender = req.getParameter("gender");
 		String email = req.getParameter("email");
-		String number = req.getParameter("phoneNumber");
+		String number = req.getParameter("number");
 		String password = req.getParameter("password");
 		String confirmPassword = req.getParameter("confirmPassword");
-		// Check for null or empty fields first
+// Check for null or empty fields first
 		if (ValidationUtil.isNullOrEmpty(firstName))
 			return "First name is required.";
 		if (ValidationUtil.isNullOrEmpty(lastName))
@@ -87,7 +86,7 @@ public class RegisterController extends HttpServlet {
 			return "Password is required.";
 		if (ValidationUtil.isNullOrEmpty(confirmPassword))
 			return "Please retype the password.";
-		// Validate fields
+// Validate fields
 		if (!ValidationUtil.isAlphanumericStartingWithLetter(username))
 			return "Username must start with a letter and contain only letters and numbers.";
 		if (!ValidationUtil.isValidGender(gender))
@@ -103,29 +102,28 @@ public class RegisterController extends HttpServlet {
 		return null; // All validations passed
 	}
 
-
 	private UserModel extractUserModel(HttpServletRequest req) throws Exception {
-		String firstName = req.getParameter("firstName");
-		String lastName = req.getParameter("lastName");
-		String username = req.getParameter("username");
-		String gender = req.getParameter("gender");
-		String email = req.getParameter("email");
-		String number = req.getParameter("phoneNumber");
-		String password = req.getParameter("password");
+	    String firstName = req.getParameter("firstName");
+	    String lastName = req.getParameter("lastName");
+	    String username = req.getParameter("username");
+	    String gender = req.getParameter("gender");
+	    String email = req.getParameter("email");
+	    String number = req.getParameter("number");
+	    String password = req.getParameter("password");
 
-		// Assuming password validation is already done in validateRegistrationForm
-		password = PasswordUtil.encrypt(username, password);
-
-		RoleModel roleModel = new RoleModel();
-		return new UserModel(firstName, lastName, username, gender, email, number, password, roleModel);
+	    password = PasswordUtil.encrypt(username, password);
+	    RoleModel roleModel = new RoleModel();
+	    
+	    // Removed profile_pic from the constructor
+	    return new UserModel(firstName, lastName, username, gender, email, number, password, roleModel);
 	}
+
 
 	private void handleSuccess(HttpServletRequest req, HttpServletResponse resp, String message, String redirectPage)
 			throws ServletException, IOException {
 		req.setAttribute("success", message);
 		req.getRequestDispatcher(redirectPage).forward(req, resp);
 	}
-
 
 	private void handleError(HttpServletRequest req, HttpServletResponse resp, String message)
 			throws ServletException, IOException {
@@ -135,7 +133,7 @@ public class RegisterController extends HttpServlet {
 		req.setAttribute("username", req.getParameter("username"));
 		req.setAttribute("gender", req.getParameter("gender"));
 		req.setAttribute("email", req.getParameter("email"));
-		req.setAttribute("phoneNumber", req.getParameter("phoneNumber"));
+		req.setAttribute("number", req.getParameter("number"));
 		req.getRequestDispatcher("/WEB-INF/pages/register.jsp").forward(req, resp);
 	}
 }

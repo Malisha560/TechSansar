@@ -1,109 +1,171 @@
 @charset "UTF-8";
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: #f8f8f8;
-    }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+}
+
 .container {
-      display: flex;
-      min-height: 100vh;
-    }
+  display: flex;
+  min-height: 100vh;
+}
 
-    .sidebar {
-      width: 250px;
-      background-color: #ffffff;
-      padding: 20px;
-      border-right: 1px solid #861819;
-    }
+.sidebar {
+  width: 250px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-right: 1px solid #861819;
+}
 
-    .sidebar h2 {
-      font-size: 18px;
-      margin-bottom: 30px;
-      color: #861819;
-    }
+.sidebar h2 {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #861819;
+}
 
-    .nav-link {
-      display: block;
-      padding: 12px 10px;
-      color: #333333;
-      text-decoration: none;
-      font-weight: 500;
-      border-left: 4px solid transparent;
-      margin-bottom: 10px;
-    }
+.nav-link {
+  display: block;
+  padding: 12px 10px;
+  color: #333333;
+  text-decoration: none;
+  font-weight: 500;
+  border-left: 4px solid transparent;
+  margin-bottom: 10px;
+}
 
-    .nav-link:hover,
-    .nav-link.active {
-      color: #861819;
-      border-left: 4px solid #861819;
-      background-color: #f9eaea;
-    }
+.nav-link:hover,
+.nav-link.active {
+  color: #861819;
+  border-left: 4px solid #861819;
+  background-color: #f9eaea;
+}
 
-    .dashboard-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-    }
+.main {
+  flex-grow: 1;
+  padding: 20px;
+}
 
-    .dashboard-header h1 {
-      font-size: 22px;
-      margin: 0;
-    }
-    .section-box {
-      background-color: #ffffff;
-      border: 2px solid #861819;
-      border-radius: 8px;
-      padding: 20px;
-      margin-top: 30px;
-    }
+.dashboard-header h1 {
+  color: #861819;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
 
-    .section-box h3 {
-      margin-bottom: 15px;
-      color: #861819;
-    }
+.summary-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+}
 
-    .orders {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+.card {
+  flex: 200px;
+  background-color: #ffffff;
+  border-left: 5px solid #861819;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
 
-    .order-item {
-      display: flex;
-      justify-content: space-between;
-      background-color: #f5f5f5;
-      padding: 12px 16px;
-      border-left: 4px solid #861819;
-      border-radius: 5px;
-      align-items: center;
-      font-size: 14px;
-    }
+.card h4 {
+  margin: 10px;
+  font-size: 16px;
+  color: #861819;
 
-    .order-product,
-    .order-date,
-    .order-customer,
-    .order-status,
-    .order-amount {
-      flex: 1;
-    }
+}
 
-    .order-status {
-      font-weight: bold;
-    }
+.card p {
+  margin: 0;
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
 
-    .order-amount {
-      text-align: right;
-    }
+h2 {
+  color: #861819;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
 
-    .status-delivered {
-      color: #228B22;
-    }
+.product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
-    .status-canceled {
-      color: #d00000;
-    }
+.product-card {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
 
-    .show {
-      display: block;
-    }
+.product-name,
+.product-stock,
+.product-brand,
+.product-description {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333333;
+}
+/* Messages Section Styles */
+.messages-section {
+  margin-top: 30px;
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.message-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-left: 5px solid #861819;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.message-header {
+  margin-bottom: 15px;
+}
+
+.message-header h3 {
+  font-size: 18px;
+  color: #861819;
+  margin-bottom: 10px;
+}
+
+.message-header p {
+  font-size: 14px;
+  color: #333;
+}
+
+.message-body {
+  margin-bottom: 15px;
+}
+
+.message-body p {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.message-footer p {
+  font-size: 14px;
+  color: #777;
+  margin-top: 10px;
+}
+
+.message-footer strong {
+  color: #861819;
+}
+
+/* No messages received yet */
+.messages-section p {
+  font-size: 16px;
+  color: #777;
+  text-align: center;
+  margin-top: 20px;
+}

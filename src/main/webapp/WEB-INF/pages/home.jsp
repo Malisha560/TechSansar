@@ -20,15 +20,16 @@
 	<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 	<jsp:include page="header.jsp"></jsp:include>
 	<section class="imgslider">
-		<article id="article-container">
-			<img src="${contextPath}/resources/images/slide1.png"
-				class="imageslider" id="img0"> <img
-				src="${contextPath}/resources/images/system/slide2.jpg"
-				class="imageslider" id="img1"> <img
-				src="${contextPath}/resources/images/system/business.jpg"
-				class="imageslider" id="img2">
-		</article>
-	</section>
+
+  <div class="slider-container">
+
+    <img src="${contextPath}/resources/images/slide1.png" class="imageslider active" />
+
+    <img src="${contextPath}/resources/images/slide2.png" class="imageslider" />
+
+  </div>
+
+</section>
 
 	<!-- product part -->
 	<h1>Save Big on Dell Laptops</h1>
@@ -43,7 +44,7 @@
 			</div>
 			<div class="discount_product">22% Off</div>
 			<form action="${pageContext.request.contextPath}/mycart" method="post">
-    <input type="hidden" name="name" value="Dell 16 Plus Laptop" />
+    <input type="hidden" name="name" value="Dell 16 Plus Laptop" alt="image"/>
     <input type="hidden" name="price" value="60624" />
     <input type="hidden" name="image" value="resources/images/1.avif" />
     <button type="submit" class="add-to-cart">Add to Cart</button>
@@ -164,15 +165,17 @@
 					<span id="days1">00</span>: <span id="hours1">00</span> : <span
 						id="minutes1">00</span> : <span id="seconds1">00</span>
 				</div>
-				<img src="${contextPath}/resources/images/s25.png" class="image">
+				
+				<img src="${contextPath}/resources/images/s25.png" class="s25">
 				<h3>Galaxy S25 Ultra</h3>
 				<p>Stunning Display with great camera</p>
 				<div class="rating">
 					★★★★★ <span class="review-count">(1,240)</span>
 				</div>
 				<div class="price">
-					Rs. 1,84,999 <span class="original-price">Rs. 1,99,999</span>
-				</div>
+					Rs. 1,84,999 				
+					</div>
+				
 			</div>
 
 			<!-- Column 2 -->
@@ -181,7 +184,7 @@
 					<div class="image-container">
 						<img src="${contextPath}/resources/images/samsungbuds.png"
 							class="brand" />
-						<div class="discount">20%</div>
+						
 					</div>
 					<div class="details">
 						<p class="title">Galaxy Buds 3 Pro</p>
@@ -189,7 +192,7 @@
 							★★★★★ <span class="count">(2,231)</span>
 						</div>
 						<div class="price">
-							Rs. 31,999 <span class="original">Rs.38,398</span>
+							Rs. 31,999 
 						</div>
 					</div>
 				</div>
@@ -210,7 +213,7 @@
 					<div class="image-container">
 						<img src="${contextPath}/resources/images/swatch.png"
 							class="brand" />
-						<div class="discount">12%</div>
+						
 					</div>
 					<div class="details">
 						<p class="title">Samsung Galaxy Watch 5 Pro</p>
@@ -218,19 +221,19 @@
 							★★★★★ <span class="count">(3,976)</span>
 						</div>
 						<div class="price">
-							Rs. 64,999<span class="original">Rs. 72,999 </span>
+							Rs. 64,999
 						</div>
 					</div>
 				</div>
 				<div class="items">
 					<div class="image-container">
 						<img src="${contextPath}/resources/images/sring.png" class="brand" />
-						<div class="new">New Arrival</div>
+						
 					</div>
 					<div class="details">
 						<p class="title">Samsung Galaxy Ring</p>
 						<div class="rating">
-							★★★★★ <span class="count">(784)</span>
+							★★★★ <span class="count">(784)</span>
 						</div>
 						<div class="price">Rs. 61,999</div>
 					</div>
@@ -255,7 +258,7 @@
 				<div class="items">
 					<div class="image-container">
 						<img src="${contextPath}/resources/images/mac.png" class="brand" />
-						<div class="new">New Arrival</div>
+						
 					</div>
 					<div class="details">
 						<p class="title">Macbook Air M4(13.6")</p>
@@ -269,15 +272,15 @@
 					<div class="image-container">
 						<img src="${contextPath}/resources/images/iwatch.png"
 							class="brand" />
-						<div class="discount">12%</div>
+						
 					</div>
 					<div class="details">
 						<p class="title">Apple Watch Series 10</p>
 						<div class="rating">
-							★★★★★ <span class="count">(3,907)</span>
+							★★★ <span class="count">(3,907)</span>
 						</div>
 						<div class="price">
-							Rs. 80,750<span class="original">Rs. 85,000</span>
+							Rs. 80,750
 						</div>
 					</div>
 				</div>
@@ -285,12 +288,12 @@
 					<div class="image-container">
 						<img src="${contextPath}/resources/images/iphone.png"
 							class="brand" />
-						<div class="new">New Arrival</div>
+					
 					</div>
 					<div class="details">
 						<p class="title">Iphone 16e (256GB)</p>
 						<div class="rating">
-							★★★★★ <span class="count">(1,274)</span>
+							★★★★ <span class="count">(1,274)</span>
 						</div>
 						<div class="price">Rs, 1,17,999</div>
 					</div>
@@ -450,5 +453,24 @@
 		</div>
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>
+	<!-- <script>
+
+  let currentIndex = 0;
+
+  const slides = document.querySelectorAll('.imageslider');
+
+
+
+  setInterval(() => {
+
+    slides[currentIndex].classList.remove('active');
+
+    currentIndex = (currentIndex + 1) % slides.length;
+
+    slides[currentIndex].classList.add('active');
+
+  }, 5000);
+
+</script> -->
 </body>
 </html>
